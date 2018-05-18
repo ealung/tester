@@ -1,0 +1,53 @@
+<html>
+<header>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <script src="./js/jquery-3.3.1.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="./js/bootstrap.min.js"></script>
+</header>
+<body>
+<div class="input-group">
+      <span class="input-group-addon">
+          <kbd id="ctext" style="background-color: #ff7e05">url</kbd>&nbsp;&nbsp;
+        <input id="controller" type="checkbox" aria-label="controller" onclick="changeSearch(this)">
+      </span>
+    <input id="searchText" type="text" class="form-control" placeholder="请输入查询的classes关键字">
+    <span class="input-group-btn">
+        <button class="btn btn-default" type="button" id="search">search!</button>
+    </span>
+</div>
+<div id="test">
+</div>
+<div class="panel panel-default" id="template" style="display: none">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <p class="method" style="float: left; margin-right: 20px;margin-left: 5px;">
+            </p>
+            <a data-toggle="collapse" data-parent="#accordion"
+               href="#body"></a>
+            <button type="button" class="btn btn-info" style="float: right;">
+                <span class="glyphicon glyphicon-triangle-right"></span>
+            </button>
+        </h4>
+    </div>
+    <div id="body" class="panel-collapse collapse">
+        <div class="panel-body">
+            <form>
+            </form>
+            <p class="type" style="margin-right: 20px;margin-left: 5px;">
+            </p>
+
+        </div>
+    </div>
+</div>
+<div class="form-group" id="textTemplate" style="display: none">
+    <label></label>
+    <input name="" type="text" class="form-control" placeholder="Text input">
+</div>
+</body>
+<script type="application/javascript" src="js/el.js"></script>
+<script type="application/javascript" src="js/tester.js"></script>
+</html>
