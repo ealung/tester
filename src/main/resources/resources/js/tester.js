@@ -22,6 +22,9 @@ $.fn.parameter = function () {
     return url;
 };
 function getPrefix(location) {
+    if(location.indexOf("/tester")<=0){
+        return location;
+    }
     return location.substr(0, location.indexOf("/tester"))
 }
 
