@@ -1,6 +1,5 @@
-package org.channel.tester.controller;
+package org.channel.tester.web;
 
-import org.channel.tester.vo.WebTestVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.util.List;
 
 /**
  * @author zhangchanglu<hzzhangchanglu @ corp.netease.com>

@@ -1,6 +1,5 @@
 package org.channel.tester.config;
 
-
 import org.channel.tester.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -59,6 +58,7 @@ public class WebTesterServlet extends HttpServlet {
         if ("/submitLogin".equals(path)) {
             String usernameParam = request.getParameter(PARAM_NAME_USERNAME);
             String passwordParam = request.getParameter(PARAM_NAME_PASSWORD);
+            response.setContentType("application/json; charset=utf-8");
             if (username.equals(usernameParam) && password.equals(passwordParam)) {
                 request.getSession().setAttribute(SESSION_USER_KEY, username);
                 response.getWriter().print("success");

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author channel<zclsoft@163.com>
+ * @author zhangchanglu<hzzhangchanglu @ corp.netease.com>
  * @since 2018/05/03 09:51.
  */
 @Data

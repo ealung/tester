@@ -1,10 +1,10 @@
 package org.channel.tester.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.channel.tester.utils.ObjectToMap;
 import org.channel.tester.utils.TestUtils;
 import org.channel.tester.vo.WebTestParam;
 import org.channel.tester.vo.WebTestVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
@@ -35,7 +35,7 @@ public class TesterController implements ApplicationListener<ContextRefreshedEve
     @Resource
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
     private List<WebTestVO> webTestVOS = null;
-    private final String MAPPING_NAME="/mapping";
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         try {
@@ -45,7 +45,7 @@ public class TesterController implements ApplicationListener<ContextRefreshedEve
         }
     }
 
-    @RequestMapping(value = MAPPING_NAME, method = RequestMethod.GET)
+    @RequestMapping(value = "mapping", method = RequestMethod.GET)
     @ResponseBody
     public List<WebTestVO> mapping(String mappingName, Integer mapping) {
         if (null == mappingName || mappingName.trim().equals("")) {
@@ -77,9 +77,6 @@ public class TesterController implements ApplicationListener<ContextRefreshedEve
             boolean jsonReturn = isJsonReturn(value);
             Set<String> patterns = key.getPatternsCondition().getPatterns();
             for (String pattern : patterns) {
-                if(pattern.contains(MAPPING_NAME)){
-                    continue;
-                }
                 WebTestVO webTestVO = WebTestVO.builder()
                         .beanName(requestMappingInfoHandlerMethodEntry.getValue().getBeanType().getName())
                         .url(pattern)
