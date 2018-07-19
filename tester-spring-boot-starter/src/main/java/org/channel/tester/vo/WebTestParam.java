@@ -1,7 +1,7 @@
 package org.channel.tester.vo;
 
 /**
- * @author zhangchanglu<hzzhangchanglu   @   corp.netease.com>
+ * @author zhangchanglu
  * @since 2018/05/08 21:13.
  */
 public class WebTestParam {
