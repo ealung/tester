@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 
 /**
- * @author channel<zclsoft@163.com>
+ * @author zhangchanglu
  * @since 2018/05/14 20:06.
  */
 @Configuration
@@ -38,7 +38,7 @@ public class TesterConfig {
             TesterUser loginUser() {
                 TesterUser testerUser = new TesterUser();
                 testerUser.setUserName("tester");
-                testerUser.setUserPwd("kadatester");
+                testerUser.setUserPwd("tester123");
                 return testerUser;
             }
         };

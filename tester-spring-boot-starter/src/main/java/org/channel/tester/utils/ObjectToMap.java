@@ -11,7 +11,8 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 /**
- * @author channel<zclsoft@163.com>
+ * @author zhangchanglu
+ *         Created by zhangchanglu on 2017/10/12
  */
 @Slf4j
 public class ObjectToMap {

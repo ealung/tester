@@ -1,5 +1,7 @@
 package org.channel.tester.web;
 
+import org.channel.tester.web.vo.ResponseView;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,18 +21,18 @@ import java.io.PrintWriter;
 public class BusinessController {
     @RequestMapping(value = "hello", method = RequestMethod.GET)
     @ResponseBody
-    public String hello(String yourName) {
-        return yourName;
+    public ResponseEntity hello(String yourName) {
+        return ResponseView.success(yourName);
     }
     @RequestMapping(value = "hello/{yourName}", method = RequestMethod.GET)
     @ResponseBody
-    public String hello2(@PathVariable String yourName) {
-        return yourName;
+    public ResponseEntity hello2(@PathVariable String yourName) {
+        return ResponseView.success(yourName);
     }
     @RequestMapping(value = "hello", method = RequestMethod.POST)
     @ResponseBody
-    public String helloPost(String yourName) {
-        return yourName;
+    public ResponseEntity helloPost(String yourName) {
+        return ResponseView.success(yourName);
     }
     @RequestMapping(value = "hello.htm")
     public void helloHtml(HttpServletRequest request, HttpServletResponse response) throws Exception{

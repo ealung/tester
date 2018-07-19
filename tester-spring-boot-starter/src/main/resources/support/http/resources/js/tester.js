@@ -14,15 +14,16 @@ $.fn.serializeObject = function () {
     return o;
 };
 $.fn.parameter = function () {
-    var url ="?timeversion="+new Date().getTime();
+    var url = "?timeversion=" + new Date().getTime();
     var a = this.serializeArray();
     $.each(a, function () {
-        url+="&"+this.name+"="+this.value;
+        url += "&" + this.name + "=" + this.value;
     });
     return url;
 };
+
 function getPrefix(location) {
-    if(location.indexOf("/tester")<=0){
+    if (location.indexOf("/tester") <= 0) {
         return location;
     }
     return location.substr(0, location.indexOf("/tester"))
@@ -52,13 +53,14 @@ function getResponseType(webTest) {
         html += formType;
     }
     if (webTest.jsonParameter) {
-        html += "<b value='"+jsonType+"'></b>";
+        html += "<b value='" + jsonType + "'></b>";
     } else {
-        html += "<b value='"+formType+"'></b>";
+        html += "<b value='" + formType + "'></b>";
     }
     html += "</kbd>";
     return html;
 }
+
 /**
  * 获取提交方式
  */
@@ -82,51 +84,59 @@ function getMethod(parents) {
  * @param method 提交方式
  * @param json 提交的json数据
  */
-function jsonHttp(button,url, method, json,contextType) {
-    $(button).attr("disabled","disabled");
+function jsonHttp(button, url, method, json, contextType) {
+    $(button).attr("disabled", "disabled");
+    var parents = $(button).parents(".panel");
     $.ajax({
         type: method,
         url: url,
         data: json,
-        contentType:contextType,
+        contentType: contextType,
         success: function (msg) {
-            var maxLength = url.length + method.length+20;
-            var single="";
-            for(var i=0;i<maxLength;i++){
+            var maxLength = url.length + method.length + 20;
+            var single = "";
+            for (var i = 0; i < maxLength; i++) {
                 single += "-";
             }
             single += "-";
             console.log("+" + single)
             console.log(" |  url->    " + url + "(" + method + ")");
-            console.log(" |  result-> "+JSON.stringify(msg));
+            console.log(" |  result-> " + JSON.stringify(msg));
             console.log("+" + single);
+            $(parents).find(".json").html("");
+            $(parents).find(".json").JSONView(msg);
 
-            if(msg.code){
-                if(msg.code=== 0){
+            if (msg.code) {
+                if (msg.code) {
+                    if (msg.code === 0) {
+                        $(button).attr("class", "btn btn-success");
+                    } else {
+                        $(button).attr("class", "btn btn-danger");
+                    }
+                } else {
                     $(button).attr("class", "btn btn-success");
-                }else {
-                    $(button).attr("class","btn btn-danger");
                 }
-            }else{
+            } else {
                 $(button).attr("class", "btn btn-success");
             }
             $(button).removeAttr("disabled");
         },
-        error:function () {
-            $(button).attr("class","btn btn-danger");
+        error: function () {
+            $(button).attr("class", "btn btn-danger");
             $(button).removeAttr("disabled");
         }
     });
 }
+
 function loadMapping(mappingName) {
-    var url="/mapping?1=1";
-    if(mappingName){
-        url+="&mappingName="+mappingName;
+    var url = "/mapping?1=1";
+    if (mappingName) {
+        url += "&mappingName=" + mappingName;
     }
-    if($("#controller").is(":checked")==true){
-        url+="&mapping=1";
-    }else{
-        url+="&mapping=0";
+    if ($("#controller").is(":checked") == true) {
+        url += "&mapping=1";
+    } else {
+        url += "&mapping=0";
     }
 
     $.getJSON(url, function (data) {
@@ -137,7 +147,7 @@ function loadMapping(mappingName) {
             test.find(".panel-title>a").text(getPrefix(window.location.href) + webTest.url);
             test.find(".method").html(getRequestMethod(webTest.requestMethod));
             test.find(".type").html(getResponseType(webTest));
-            test.find(".type").append("<kbd style='margin-left: 30px;'>"+webTest.beanName+"</kdb>");
+            test.find(".type").append("<kbd style='margin-left: 30px;'>" + webTest.beanName + "</kdb>");
             test.find(".panel-title>a").attr("href", "#body-" + i);
             test.find(".panel-collapse").attr("id", "body-" + i);
             webTest.parameter.forEach(function (value) {
@@ -156,51 +166,55 @@ function loadMapping(mappingName) {
                 setFocus($(this));
                 var parents = $(this).parents(".panel");
                 var url = $(parents).find("h4>a").text();
-                url = formatUrl(parents,url);
+                url = formatUrl(parents, url);
                 var responseType = $(parents).find(".typekbd").text();
                 var requestType = $(parents).find("b").attr("value");
                 var method = getMethod(parents);
-                if (responseType === jsonType||requestType===jsonType) {
+                if (responseType === jsonType || requestType === jsonType) {
                     var json = $(parents).find("form").serializeObject();
-                    if(requestType===jsonType){
-                        json=JSON.stringify(json);
+                    if (requestType === jsonType) {
+                        json = JSON.stringify(json);
                     }
-                    jsonHttp($(this),url,method,json,requestType);
+                    jsonHttp($(this), url, method, json, requestType);
                 } else {
                     var parameter = $(parents).find("form").parameter();
-                    window.open(url+parameter, '_blank');
+                    window.open(url + parameter, '_blank');
                 }
             });
         });
     });
 }
+
 function setFocus(button) {
     var parents = $(button).parents(".panel");
     $(".panel-title").removeClass("bg-primary");
     $(parents).find(".panel-title").addClass("bg-primary");
 }
+
 function changeSearch() {
-    if($("#controller").is(":checked")==true){
-        $("#searchText").attr("placeholder","请输入查询的classes关键字");
+    if ($("#controller").is(":checked") == true) {
+        $("#searchText").attr("placeholder", "请输入查询的classes关键字");
         $("#ctext").html("classes:");
-    }else{
-        $("#searchText").attr("placeholder","请输入查询的url关键字");
+    } else {
+        $("#searchText").attr("placeholder", "请输入查询的url关键字");
         $("#ctext").html("url：");
     }
 
 }
+
 function search() {
     $("#test").html("");
     var context = $("#searchText").val();
     loadMapping(context);
 }
+
 $(function () {
     loadMapping();
-    $("#search").bind("click",function () {
+    $("#search").bind("click", function () {
         search();
     });
     $("#searchText").keydown(function (e) {
-        if(e.keyCode === 13){
+        if (e.keyCode === 13) {
             search();
         }
     });

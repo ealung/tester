@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * @author channel<zclsoft@163.com>
+ * @author zhangchanglu
  * @since 2018/05/14 20:10.
  */
 @Retention(RetentionPolicy.RUNTIME)

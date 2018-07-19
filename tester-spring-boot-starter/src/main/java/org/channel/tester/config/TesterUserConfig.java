@@ -3,7 +3,7 @@ package org.channel.tester.config;
 import org.channel.tester.vo.TesterUser;
 
 /**
- * @author channel<zclsoft@163.com>
+ * @author zhangchanglu
  * @since 2018/05/17 17:49.
  */
 public abstract class TesterUserConfig {

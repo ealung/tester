@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.util.Random;
 
 /**
- * @author channel<zclsoft@163.com>
+ * Created by hzzhangchanglu on 2017/6/7
  * 测试帮助类
  */
 public class TestUtils {
