@@ -105,16 +105,11 @@ function jsonHttp(button, url, method, json, contextType) {
             console.log("+" + single);
             $(parents).find(".json").html("");
             $(parents).find(".json").JSONView(msg);
-
             if (msg.code) {
-                if (msg.code) {
-                    if (msg.code === 0) {
-                        $(button).attr("class", "btn btn-success");
-                    } else {
-                        $(button).attr("class", "btn btn-danger");
-                    }
-                } else {
+                if (msg.code === 0) {
                     $(button).attr("class", "btn btn-success");
+                } else {
+                    $(button).attr("class", "btn btn-danger");
                 }
             } else {
                 $(button).attr("class", "btn btn-success");
@@ -162,27 +157,43 @@ function loadMapping(mappingName) {
                 })
             });
             $("#test").append(test);
-            test.find("button").bind("click", function () {
-                setFocus($(this));
-                var parents = $(this).parents(".panel");
-                var url = $(parents).find("h4>a").text();
-                url = formatUrl(parents, url);
-                var responseType = $(parents).find(".typekbd").text();
-                var requestType = $(parents).find("b").attr("value");
-                var method = getMethod(parents);
-                if (responseType === jsonType || requestType === jsonType) {
-                    var json = $(parents).find("form").serializeObject();
-                    if (requestType === jsonType) {
-                        json = JSON.stringify(json);
-                    }
-                    jsonHttp($(this), url, method, json, requestType);
+            test.find("[name = exec]").bind("click", function () {
+                run($(this));
+            });
+            test.find("[name = cycle]").bind("click", function () {
+                if (running) {
+                    clearInterval(timer);
+                    running = false;
                 } else {
-                    var parameter = $(parents).find("form").parameter();
-                    window.open(url + parameter, '_blank');
+                    timer = window.setInterval(run.bind(this, $(this)), 1000);
+                    running = true;
                 }
             });
         });
     });
+}
+
+var timer;
+var running = false;
+
+function run(button) {
+    setFocus($(button));
+    var parents = $(button).parents(".panel");
+    var url = $(parents).find("h4>a").text();
+    url = formatUrl(parents, url);
+    var responseType = $(parents).find(".typekbd").text();
+    var requestType = $(parents).find("b").attr("value");
+    var method = getMethod(parents);
+    if (responseType === jsonType || requestType === jsonType) {
+        var json = $(parents).find("form").serializeObject();
+        if (requestType === jsonType) {
+            json = JSON.stringify(json);
+        }
+        jsonHttp($(button), url, method, json, requestType);
+    } else {
+        var parameter = $(parents).find("form").parameter();
+        window.open(url + parameter, '_blank');
+    }
 }
 
 function setFocus(button) {
@@ -193,10 +204,10 @@ function setFocus(button) {
 
 function changeSearch() {
     if ($("#controller").is(":checked") == true) {
-        $("#searchText").attr("placeholder", "请输入查询的classes关键字");
+        $("#searchText").attr("placeholder", "请输入查询的url关键字");
         $("#ctext").html("classes:");
     } else {
-        $("#searchText").attr("placeholder", "请输入查询的url关键字");
+        $("#searchText").attr("placeholder", "请输入查询的classes关键字");
         $("#ctext").html("url：");
     }
 
@@ -207,7 +218,17 @@ function search() {
     var context = $("#searchText").val();
     loadMapping(context);
 }
-
+var show = true;
+function maximize(div) {
+    if (show) {
+        $(".panel-heading").parent(".panel").hide();
+        $(div).parents(".panel").show();
+        show=false;
+    } else {
+        $(".panel-heading").parent(".panel").show();
+        show=true;
+    }
+}
 $(function () {
     loadMapping();
     $("#search").bind("click", function () {

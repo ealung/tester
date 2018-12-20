@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/jquery-jsonview/1.2.3/jquery.jsonview.min.css" rel="stylesheet">
-    <script src="./js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="./js/bootstrap.min.js"></script>
-    <script src="./js/jquery.jsonview.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.jsonview.js"></script>
 </header>
 <body>
 <div class="input-group">
@@ -27,12 +27,16 @@
 <div class="panel panel-default" id="template" style="display: none">
     <div class="panel-heading">
         <h4 class="panel-title">
-            <p class="method" style="float: left; margin-right: 20px;margin-left: 5px;">
+            <span class="glyphicon glyphicon glyphicon-fullscreen" aria-hidden="true" onclick="maximize(this)" style="float: left; margin-right: 10px;margin-left: 5px;"></span>
+            <p class="method" style="float: left; margin-right: 10px;margin-left: 5px;">
             </p>
             <a data-toggle="collapse" data-parent="#accordion"
                href="#body"></a>
-            <button type="button" class="btn btn-info" style="float: right;">
+            <button name="exec" type="button" class="btn btn-info" style="float: right;">
                 <span class="glyphicon glyphicon-triangle-right"></span>
+            </button>
+            <button name="cycle" type="button" class="btn btn-info" style="float: right;margin-right: 10px;">
+                <span class="glyphicon glyphicon-refresh"></span>
             </button>
         </h4>
     </div>

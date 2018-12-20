@@ -1,5 +1,6 @@
 package org.channel.tester.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.channel.tester.utils.Utils;
 
 import javax.servlet.ServletException;
@@ -13,15 +14,18 @@ import java.io.IOException;
  * @author zhangchanglu
  * @since 2018/05/14 17:40.
  */
+@Slf4j
 public class WebTesterServlet extends HttpServlet {
-    protected String           username            = "tester";
-    protected String           password            = "kadatester";
-    public static final String SESSION_USER_KEY    = "tester-user";
+    protected String username = "tester";
+    protected String password = "kadatester";
+    public static final String SESSION_USER_KEY = "tester-user";
     public static final String PARAM_NAME_USERNAME = "username";
     public static final String PARAM_NAME_PASSWORD = "password";
     protected String resourcePath;
+
     public WebTesterServlet() {
-        this.resourcePath = "support/http/resources";;
+        this.resourcePath = "support/http/resources";
+        ;
     }
 
     public WebTesterServlet(String resourcePath) {
@@ -34,14 +38,16 @@ public class WebTesterServlet extends HttpServlet {
 
     private void initAuthEnv() {
         String paramUserName = getInitParameter(PARAM_NAME_USERNAME);
-        if (null!=paramUserName) {
+        if (null != paramUserName) {
             this.username = paramUserName;
         }
         String paramPassword = getInitParameter(PARAM_NAME_PASSWORD);
-        if (null!=paramPassword) {
+        if (null != paramPassword) {
             this.password = paramPassword;
         }
+        log.info("tester user: {}, password:{}", username, password);
     }
+
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String contextPath = request.getContextPath();
@@ -66,15 +72,15 @@ public class WebTesterServlet extends HttpServlet {
             }
             return;
         }
-          if(!ContainsUser(request)
-                  && !("/login.html".equals(path) //
-                  || path.startsWith("/css")//
-                  || path.startsWith("/js") //
-                  || path.startsWith("/img"))
-                  ){
-              response.sendRedirect("/tester/login.html");
-              return;
-          }
+        if (!ContainsUser(request)
+                && !("/login.html".equals(path) //
+                || path.startsWith("/css")//
+                || path.startsWith("/js") //
+                || path.startsWith("/img"))
+                ) {
+            response.sendRedirect("/tester/login.html");
+            return;
+        }
         returnResourceFile(path, uri, response);
     }
 
@@ -108,6 +114,7 @@ public class WebTesterServlet extends HttpServlet {
     protected String getFilePath(String fileName) {
         return resourcePath + fileName;
     }
+
     public boolean ContainsUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
         return session != null && session.getAttribute(SESSION_USER_KEY) != null;
